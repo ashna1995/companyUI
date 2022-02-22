@@ -1,0 +1,488 @@
+<head>
+
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+
+
+     <hr>
+
+     <div class="container">
+        <img src="assets/images/money.jpg" alt="Norway" style="width:100%;">
+        <div class="text-block1">
+           <h1 style="font-size:60px;">StockMarket</h1>
+          
+          </div>
+
+        <div class="text-block">
+        
+          <h3>{{this.cname1}} has the maximum stock price of {{this.max}}</h3>
+          <h3>{{this.cname2}} has the minimum stock price of {{this.min}}</h3>
+          <h3>{{this.avg}} is the average stock price </h3>
+        </div>
+      </div>
+     <div>
+     
+     
+<!--                    Register                               -->
+
+    
+      <div class="company-container">
+      <mat-expansion-panel>
+          <mat-expansion-panel-header>
+              <mat-panel-title style=" color: rgb(20, 60, 238);">
+               Register the Company
+              </mat-panel-title>
+          </mat-expansion-panel-header>
+
+
+
+
+
+
+
+
+
+
+          <div class="companyCode">
+              <mat-form-field appearance="fill">
+                <mat-label>Enter companyCode</mat-label>
+                  <input required matInput  name="companyCode" 
+                  [(ngModel)]="companymodel.companyCode">
+              </mat-form-field>
+  </div>
+              <div class="companysName">
+                 
+                  <mat-form-field appearance="fill">
+                    <mat-label>Enter companysName</mat-label>
+                    <select matNativeControl required  name="companysName" 
+                    [(ngModel)]="companymodel.companysName">
+                      <option value="Flipcart">Flipcart</option>
+                      <option value="Walmart">Walmart</option>
+                      <option value="Facebook">Facebook</option>
+                      <option value="Instagram">Instagram</option>
+                      <option value="volvo">Volvo</option>
+                      <option value="saab">Saab</option>
+                      <option value="mercedes">Mercedes</option>
+                      <option value="audi">Audi</option>
+                      <option value="Tcs">Tcs</option>
+                      <option value="Infosys">Infosys</option>
+                      <option value="CTS">CTS</option>
+                      <option value="Amazon">Amazon</option>
+                    </select>
+                </mat-form-field>
+
+         </div>
+         <div class="companysCEO">
+          <mat-form-field appearance="fill">
+            <mat-label>Enter companysCEO</mat-label>
+              <input required matInput  name="companysCEO" 
+              [(ngModel)]="companymodel.companysCEO">
+          </mat-form-field>
+</div>
+          <div class="companyTurnover">
+              <mat-form-field appearance="fill">
+                <mat-label>Enter companyTurnover(  must be greater than 10Cr)</mat-label>
+                  <input matInput required minlength="8" matInputname="companyTurnover" 
+                  [(ngModel)]="companymodel.companyTurnover">
+              
+              </mat-form-field>
+     </div>
+     <div class="companyWebsite">
+      <mat-form-field appearance="fill">
+        <mat-label>Enter companyWebsite</mat-label>
+          <input required matInput name="companyWebsite" 
+          [(ngModel)]="companymodel.companyWebsite">
+      </mat-form-field>
+      
+</div>
+      <div class="stockExchange">
+        <mat-form-field appearance="fill">
+        <mat-label>Enter stockExchange it is enlisted in (BSE, NSE etc)</mat-label>
+              <input required matInput  name="stockExchange" 
+              [(ngModel)]="companymodel.stockExchange">
+          </mat-form-field>
+          
+ </div>
+ 
+                              
+                  <mat-action-row>
+                      <div class="container-fluid padding">
+                          <div class="row">
+                              <div class="col-md-2" style="margin-left: 60px;">
+                                  <button mat-raised-button class="btn btn-primary" (click)="Register()">
+                                      Save Company!!</button>
+                              </div>
+                          </div>
+                      </div>
+                  </mat-action-row>
+             
+        </mat-expansion-panel>
+        </div>
+
+
+    <!--                    View-->    
+      <br>
+      <div class="company-container">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title style=" color: rgb(20, 60, 238);">
+                 View the Company Details
+                </mat-panel-title>
+            </mat-expansion-panel-header> 
+            <mat-action-row>
+                <div class="container-fluid padding">
+                    <div class="row">
+                        <div class="col-md-2" style="margin-left: 60px;">
+<button mat-raised-button class="btn btn-primary"  (click)="viewAllCompanys()">View Company Details</button>
+</div>
+</div>
+</div>
+</mat-action-row>
+
+<mat-form-field appearance="standard">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+  </mat-form-field>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<ng-container matColumnDef="companyCode">
+    <th mat-header-cell *matHeaderCellDef> companyCode </th>
+    <td mat-cell *matCellDef="let element"> {{element.companyCode}} </td>
+  </ng-container>
+  <ng-container matColumnDef="companysName">
+    <th mat-header-cell *matHeaderCellDef> companysName </th>
+    <td mat-cell *matCellDef="let element"> {{element.companysName}} </td>
+  </ng-container>
+  <ng-container matColumnDef="companysCEO">
+    <th mat-header-cell *matHeaderCellDef> companysCEO </th>
+    <td mat-cell *matCellDef="let element"> {{element.companysCEO}} </td>
+  </ng-container>
+  <ng-container matColumnDef="companyTurnover">
+    <th mat-header-cell *matHeaderCellDef> companyTurnover </th>
+    <td mat-cell *matCellDef="let element"> {{element.companyTurnover}} </td>
+  </ng-container>
+  <ng-container matColumnDef="companyWebsite">
+    <th mat-header-cell *matHeaderCellDef> companyWebsite </th>
+    <td mat-cell *matCellDef="let element"> {{element.companyWebsite}} </td>
+  </ng-container>
+  <ng-container matColumnDef="stockExchange">
+    <th mat-header-cell *matHeaderCellDef>stockExchange </th>
+    <td mat-cell *matCellDef="let element"> {{element.stockExchange}} </td>
+  </ng-container>
+  <ng-container matColumnDef="stockprice">
+    <th mat-header-cell *matHeaderCellDef> stockprice </th>
+    <td mat-cell *matCellDef="let element"> {{element.stockprice}} </td>
+  </ng-container>
+  <ng-container matColumnDef="time">
+    <th mat-header-cell *matHeaderCellDef>time </th>
+    <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+  
+           
+</mat-expansion-panel>
+</div>
+  <!--                                 Update                                         -->   
+  <br>
+  <div class="company-container">
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title style=" color: rgb(20, 60, 238);">
+             Update the Company Details
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="companyCode">
+            <mat-form-field>
+                <input required matInput placeholder="Enter companyCode" name="companyCode" 
+                [(ngModel)]="companymodel.companyCode">
+            </mat-form-field>
+</div>
+            <div class="companysName">
+                <mat-form-field>
+                    <input matInput placeholder="Enter companysName" name="companysName" 
+                    [(ngModel)]="companymodel.companysName">
+                </mat-form-field>
+       </div>
+       <div class="companysCEO">
+        <mat-form-field>
+            <input matInput placeholder="Enter companysCEO" name="companysCEO" 
+            [(ngModel)]="companymodel.companysCEO">
+        </mat-form-field>
+</div>
+        <div class="companyTurnover">
+            <mat-form-field>
+                <input minlength="8" matInput placeholder="Enter companyTurnoverand  must be greater than 10Cr." name="companyTurnover" 
+                [(ngModel)]="companymodel.companyTurnover">
+            </mat-form-field>
+   </div>
+   <div class="companyWebsite">
+    <mat-form-field>
+        <input matInput placeholder="Enter companyWebsite" name="companyWebsite" 
+        [(ngModel)]="companymodel.companyWebsite">
+    </mat-form-field>
+</div>
+    <div class="stockExchange">
+        <mat-form-field>
+            <input matInput placeholder="Enter stockExchange" name="stockExchange" 
+            [(ngModel)]="companymodel.stockExchange">
+        </mat-form-field>
+</div>
+
+                            
+                <mat-action-row>
+                    <div class="container-fluid padding">
+                        <div class="row">
+                            <div class="col-md-2" style="margin-left: 60px;">
+                                <button mat-raised-button class="btn btn-primary" (click)="Update()">
+                                    Update Company!!</button>
+                            </div>
+                        </div>
+                    </div>
+                </mat-action-row>
+           
+      </mat-expansion-panel>
+      </div>
+  
+ <!--                      ViewSingleCompany        -->
+
+ <br>
+      <div class="company-container">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title style=" color: rgb(20, 60, 238);">
+                 View the Specific Company Details
+                </mat-panel-title>
+            </mat-expansion-panel-header> 
+            <mat-form-field>
+                <input required matInput placeholder="Enter companyCode" name="companyCode" 
+                [(ngModel)]="companymodel.companyCode">
+            </mat-form-field>
+
+
+            <mat-action-row>
+                <div class="container-fluid padding">
+                    <div class="row">
+                        <div class="col-md-2" style="margin-left: 60px;">
+<button  mat-raised-button class="btn btn-primary"  (click)="viewSingleCompany(companymodel.companyCode)">View Company Details</button>
+</div>
+</div>
+</div>
+</mat-action-row>
+
+<table class="mat-elevation-z8">
+    <tr style="width: 10%">
+          <th style="color :rgba(145, 141, 141, 0.877); ">   companysCode </th>
+          <th style="color :rgba(145, 141, 141, 0.877); "> companysName </th>
+          <th style="color :rgba(145, 141, 141, 0.877); "> companysCEO </th>
+          <th style="color :rgba(145, 141, 141, 0.877); " > companyTurnover </th>
+          <th style="color :rgba(145, 141, 141, 0.877); " > companyWebsite </th>
+          <th style="color :rgba(145, 141, 141, 0.877); " >stockExchange </th>
+          <th style="color :rgba(145, 141, 141, 0.877); " > stockprice </th>
+          <th style="color :rgba(145, 141, 141, 0.877); ">time </th>
+          </tr>
+   
+          <tr style="width: 10%">
+        <td > {{csp[0]}} </td>
+
+
+  
+        <td> {{csp[1]}} </td>
+
+
+     
+        <td > {{csp[2]}} </td>
+    
+
+       
+        <td> {{csp[3]}} </td>
+   
+       
+        
+        <td> {{csp[4]}} </td>
+   
+        
+        <td> {{csp[5]}} </td>
+    
+        
+        <td> {{csp[6]}} </td>
+        <tr style="width: 10%">
+
+    </table>
+  
+  
+</mat-expansion-panel>
+</div>
+<br>
+<!---                  Add Stock                --->
+
+<div class="company-container">
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title style=" color: rgb(20, 60, 238);">
+             Add the Stock
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+   
+        <div class="companyCode">
+            <mat-form-field>
+                <input required matInput placeholder="Enter companyCode" name="companyCode" 
+                [(ngModel)]="companymodel.companyCode">
+            </mat-form-field>
+        </div>
+
+<div class="stockprice">
+    <mat-form-field>
+        <input required matInput placeholder="Enter stockprice" name="stockprice" 
+        [(ngModel)]="companymodel.stockprice">
+    </mat-form-field>
+</div>
+<mat-action-row>
+    <div class="container-fluid padding">
+        <div class="row">
+            <div class="col-md-2" style="margin-left: 60px;">
+                <button mat-raised-button class="btn btn-primary" (click)="addStock(companymodel.companyCode)">
+                    Add Stock!!</button>
+            </div>
+        </div>
+    </div>
+</mat-action-row>
+</mat-expansion-panel>
+</div>
+
+<br>
+<!---                  Update Stock                --->
+
+<div class="company-container">
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title style=" color: rgb(20, 60, 238);">
+             Update the Stock
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+   
+        <div class="companyCode">
+            <mat-form-field>
+                <input required matInput placeholder="Enter companyCode" name="companyCode" 
+                [(ngModel)]="companymodel.companyCode">
+            </mat-form-field>
+        </div>
+
+<div class="stockprice">
+    <mat-form-field>
+        <input matInput placeholder="Enter stockprice" name="stockprice" 
+        [(ngModel)]="companymodel.stockprice">
+    </mat-form-field>
+</div>
+<mat-action-row>
+    <div class="container-fluid padding">
+        <div class="row">
+            <div class="col-md-2" style="margin-left: 60px;">
+                <button mat-raised-button class="btn btn-primary" (click)="updateStock(companymodel.companyCode)">
+                    Update Stock!!</button>
+            </div>
+        </div>
+    </div>
+</mat-action-row>
+</mat-expansion-panel>
+</div>
+
+<!--                   DeleteCompany        -->
+<br>
+ 
+<div class="company-container">
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title style=" color: rgb(20, 60, 238);">
+            Delete Company
+            </mat-panel-title>
+        </mat-expansion-panel-header> 
+        <mat-form-field>
+            <input required matInput placeholder="Enter companyCode" name="companyCode" 
+            [(ngModel)]="companymodel.companyCode">
+        </mat-form-field>
+
+
+        <mat-action-row>
+            <div class="container-fluid padding">
+                <div class="row">
+                    <div class="col-md-2" style="margin-left: 60px;">
+<button  mat-raised-button class="btn btn-primary" (click)="deleteCompany(companymodel.companyCode)">Delete</button>
+</div>
+</div>
+</div>
+</mat-action-row>
+
+
+</mat-expansion-panel>
+</div>
+<br>
+<!---                  Minmaxavg                --->
+
+<div class="company-container">
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title style=" color: rgb(20, 60, 238);">
+             Minimum ,Maximum and Average
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+   
+<div class="stockprice">
+    <mat-form-field>
+        <input matInput placeholder="Enter start time" name="time1" 
+        [(ngModel)]="t1">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Enter end time" name="time2" 
+        [(ngModel)]="t2">
+    </mat-form-field>
+</div>
+<mat-action-row>
+    <div class="container-fluid padding">
+        <div class="row">
+            <div class="col-md-2" style="margin-left: 60px;">
+                <button mat-raised-button class="btn btn-primary" (click)="minmaxavgtime(t1,t2)">
+                   Done!!</button>
+                   <h3>{{this.cname1}} has the maximum stock price of {{this.max}}</h3>
+          <h3>{{this.cname2}} has the minimum stock price of {{this.min}}</h3>
+          <h3>{{this.avg}} is the average stock price </h3>
+         
+            </div>
+        </div>
+    </div>
+</mat-action-row>
+</mat-expansion-panel>
+</div>
+
+
+
+
+
+</div>
+
+<hr>
+<br><br><br>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
